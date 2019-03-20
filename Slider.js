@@ -96,7 +96,7 @@ class Slider {
     slider.className = "slider";
     slider.id = "colorRange";
 
-    var pixelData = (function getClr() {
+    var pixelData = (function getClr() { // creating canvas gradient and returning image data
       let ctx = canvas.getContext("2d");
       let grd = ctx.createLinearGradient(0, 0, width, 10);
 
@@ -118,26 +118,21 @@ class Slider {
       return ctx.getImageData(0, 0, width, 1).data;
     })();
 
-    var color = {
+    var color = { // setting initial rgb values
       r: pixelData[(val * (width / max) * 4)],
       g: pixelData[(val * (width / max) * 4) + 1],
       b: pixelData[(val * (width / max) * 4) + 2]
     };
 
-    rules[2].style.background = 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')';
-
-    slider.onmousedown = function() {
-      rules[2].style.width = '25px';
-      rules[2].style.height = '25px';
-    }
-
-    slider.onmouseup = function() { //change slider thumb size
-      rules[2].style.width = '20px';
-      rules[2].style.height = '20px';
-    }
+    rules[2].style.background = 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')'; //applying initial rgb values to slider thumb
 
     slider.oninput = function() {
-      val = this.value * width / max;
+      /*  adjusting slider value to element length/range length ratio
+          e.g with a length of 200px, and a range length of 10
+          the range will then only have 10 stops every 20px.
+          Each stop representing the color at that position on the gradient.
+      */
+      val = this.value * width / max; 
 
       color.r = pixelData[(val * 4)];
       color.g = pixelData[(val * 4) + 1];
@@ -146,11 +141,11 @@ class Slider {
       console.log(val, color.r, color.g, color.b);
 
       if (val == min * width / max) {
-        rules[2].style.background = 'rgb(255,255,255)';
+        rules[2].style.background = 'rgb(255,255,255)'; //set to pure white if at zero
       } else if (val == max * width / max) {
-        rules[2].style.background = 'rgb(0,0,0)';
+        rules[2].style.background = 'rgb(0,0,0)'; //set to pure black if at max
       } else {
-        rules[2].style.background = 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')';
+        rules[2].style.background = 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')'; //set to rgb colors
       }
     }
 
@@ -161,7 +156,5 @@ class Slider {
   }
 }
 
-var Slide = new Slider(200, 200).component();
-Slide.style = "position: relative; top: 200px; left: 200px;";
-console.log(Slide);
+var Slide = new Slider(200, 10).component();
 document.body.appendChild(Slide);
