@@ -162,4 +162,6 @@ class Slider {
 }
 
 var Slide = new Slider(200, 200).component();
+Slide.style = "position: relative; top: 200px; left: 200px;";
+console.log(Slide);
 document.body.appendChild(Slide);
