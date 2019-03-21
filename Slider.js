@@ -49,27 +49,31 @@ class Slider {
       }`
     var rule3 =
       `.slider:active {
-        width: ${width+35}px;
-        margin-left: -15px;
         
-        animation: move 0.05s forwards;
-        display: inline-block;
+        animation: move 0.5s forwards;
+        
       }`
     var rule4 =
       `.slider:active::-webkit-slider-thumb {
-        content: '';
-        width: 50px;
+        width: 20px;
         cursor: pointer;
-        height: 50px;
+        height: 20px;
         border-radius: 50% 50% 50% 0;
         transform: rotate(135deg);
-        position: relative; 
+        border: 4px solid rgb(255, 255, 255);
+        box-shadow: 0px 0px 3px 0px black;
+         
+        top: 0px;
+        
       }`
 
     var rule5 =
       `@keyframes move {
+
       100% {
-        transform: translate(0px, 50px);
+        transform: translateY(45px);
+        width: ${width+40}px;
+        margin-left: -18px;
       }
     }`
 
@@ -125,7 +129,47 @@ class Slider {
     };
 
     rules[2].style.background = 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')'; //applying initial rgb values to slider thumb
+    
+    
+    /* CUSTOM ANIMATION OF NON STANDARD PSUEDO ELEMENT -webkit-slider-thumb 
+        
+    */
+    let mouseUp = false;
+    slider.onmousedown = function(){
+      mouseUp = false;
+      console.log();
+      let startTime = new Date().getTime();
+      let animLength = 1000;
+      let x= 20;
+      let interval = setInterval(function(){
+          let now = new Date().getTime() - startTime;
+          if(now > animLength || mouseUp == true){
+              clearInterval(interval);
+              return;
+          }
+          if(now < 200 && now > 100){
+            x+=1;
+            rules[4].style.width = x+"px";
+            rules[4].style.height = x+"px";
 
+          }
+      }, 100/24);
+      
+    }
+    
+    slider.onmouseup = function(){
+      mouseUp = true;
+      rules[4].style.width = "20px";
+      rules[4].style.cursor = "pointer";
+      rules[4].style.height = "20px";
+      rules[4].style.borderRadius = "50% 50% 50% 0";
+      rules[4].style.transform = "rotate(135deg)";
+      rules[4].style.border = "4px solid rgb(255, 255, 255)";
+      rules[4].style.boxShadow = "0px 0px 3px 0px black";
+      rules[4].style.position = "relative"; 
+      rules[4].style.top = "0px";
+    }
+    
     slider.oninput = function() {
       /*  adjusting slider value to element length/range length ratio
           e.g with a length of 200px, and a range length of 10
@@ -156,5 +200,5 @@ class Slider {
   }
 }
 
-var Slide = new Slider(200, 10).component();
+var Slide = new Slider(200, 100).component();
 document.body.appendChild(Slide);
