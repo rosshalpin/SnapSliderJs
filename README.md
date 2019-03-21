@@ -2,6 +2,7 @@
 Snapchat style color slider
 
 SnapSliderJs:
+
 ![gif](GIF.gif)
 
 Snapchat color slider:
