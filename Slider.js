@@ -11,16 +11,14 @@ class Slider {
   component = () => {
     var style = document.createElement("style");
     document.head.appendChild(style);
-
     var width = this.width;
     var max = this.max;
     var min = 0;
-
     var val = max / 2;
 
     var rule0 =
       `#gradient {
-        left: 9px;
+       
         position: absolute;
         border-radius: 10px;
         border: 2px solid rgb(255, 255, 255);
@@ -33,10 +31,12 @@ class Slider {
         background: transparent;
         outline: none;
         position: absolute;
-        width: ${width+5}px;
+        width: ${width}px;
+       
       }`
     var rule2 =
       `.slider::-webkit-slider-thumb {
+        position: relative;
         -webkit-appearance: none;
         appearance: none;
         width: 20px;
@@ -63,7 +63,7 @@ class Slider {
         border: 4px solid rgb(255, 255, 255);
         box-shadow: 0px 0px 3px 0px black;
          
-        top: 0px;
+        
         
       }`
 
@@ -73,7 +73,7 @@ class Slider {
       100% {
         transform: translateY(45px);
         width: ${width+40}px;
-        margin-left: -18px;
+        margin-left: -20px;
       }
     }`
 
@@ -151,10 +151,8 @@ class Slider {
             x+=1;
             rules[4].style.width = x+"px";
             rules[4].style.height = x+"px";
-
           }
       }, 100/24);
-      
     }
     
     slider.onmouseup = function(){
@@ -200,5 +198,6 @@ class Slider {
   }
 }
 
-var Slide = new Slider(200, 100).component();
+var Slide = new Slider(200, 200).component();
+Slide.style = "position: absolute; top: 200px; left: 200px;";
 document.body.appendChild(Slide);
