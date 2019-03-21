@@ -5,4 +5,5 @@ SnapSliderJs:
 ![gif](GIF.gif)
 
 Snapchat color slider:
-![jpg](http://i.imgur.com/V3KGeTy.jpg)
+
+<img src="http://i.imgur.com/V3KGeTy.jpg" width="100px"></img>
